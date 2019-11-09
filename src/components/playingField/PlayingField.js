@@ -1,4 +1,5 @@
 import React from 'react';
+import './Unit.js';
 import './PlayingField.css';
 import APIService from './../../services/APIService';
 import { getPlayingFieldService } from './../../services/PlayingFieldService';
@@ -34,7 +35,7 @@ export default class PlayingField extends React.Component {
     addUnitToPlayingField(unitObj) {
         console.log("unit to add to playingfield: ")
         console.log(unitObj)
-        //this.refs.field.appendChild(unitObj)
+        this.refs.field.appendChild(unitObj)
     }
 
     allowDrop(evt) {
@@ -48,11 +49,11 @@ export default class PlayingField extends React.Component {
     drop(evt) {
         evt.preventDefault();
         var data = evt.dataTransfer.getData("text");
-        let h1 = document.createElement("h1");
-        h1.innerText = "O";
+        let unit = new Unit();
+        this.addUnitToPlayingField(unit.gene)
         console.log("Das ist  y-Position des gedroppten Elements: " + evt.clientY);
         console.log("Das ist die x-Position des gedroppten Elements: " + evt.clientX);
-        evt.target.appendChild(h1);
+        evt.target.appendChild(unit);
     }
     render() {
         return (
