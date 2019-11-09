@@ -1,6 +1,7 @@
 import React from 'react';
 import './UnitList.css';
 import APIService from '../../services/APIService';
+import UnitListEntry from '../unitListEntry/UnitListEntry';
 
 export default class UnitList extends React.Component {
     units = []
@@ -10,15 +11,12 @@ export default class UnitList extends React.Component {
         this.units = this.apiService.getUnits();
     }
     render() {
-        let unitnames = "";
-
-        for(let unit of this.units){
-            unitnames = unitnames + ", " + unit.name
-        }
-        console.log("Ended up with following unit names: '" + unitnames + "'")
+        let unitList = this.units.map(unit =><li key={unit.name}><UnitListEntry unit={unit}></UnitListEntry></li>);
+        console.log("Unitlist:")
+        console.log(unitList)
         return (
             <div className="maxed">
-                <h1>{unitnames}</h1>
+                <ul>{unitList}</ul>
             </div>
         )
     }

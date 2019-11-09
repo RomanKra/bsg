@@ -2,8 +2,6 @@
  * this class contains the data a unitTemplate has to contains
  */
 class UnitTemplate {
-    constructor() {
-    }
     name = "unit";
     size = 1.0;
     speed = 0.1;
@@ -13,11 +11,11 @@ class UnitTemplate {
     melee = true;
 }
 
-
 let list = null;
 
 export default function getUnitTypeList(){
     if (list == null){
+        list = [];
         //Swordman
         let sword= new UnitTemplate();
         sword.attackSpeed=2;

@@ -1,5 +1,4 @@
 .unit{
+    position: absolute;
     background-color:blue;
-    width:10%;
-    height:10%;
 }
