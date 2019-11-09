@@ -1,7 +1,6 @@
 import { getNewUnitID, getPlayingFieldService } from "../services/PlayingFieldService"
 import React from "react"
 export default class Unit {
-    id = -1;
     constructor(unitTemplate) {
         this.id = getNewUnitID();
         this.name = unitTemplate.name;
@@ -15,6 +14,7 @@ export default class Unit {
         this.posY = 0;
         this.domObj = null;
     }
+    id = -1;
     name = "unit";
     size = 1.0;
     speed = 0.1;
@@ -27,14 +27,14 @@ export default class Unit {
         if (this.domObj == null) {
             let me = this;
             this.domObjID = getNewUnitID();
-            this.domObj = generateNewDomObject(me);
+            this.domObj = this.generateNewDomObject(me);
             getPlayingFieldService().addUnitToPlayingField(this.domObj);
         }
-        getPlayingFieldService().updateUnitPosition(positionX, positionY, newWidth, newHeight)
+        getPlayingFieldService().updateUnitPosition(this.domObjID, positionX, positionY, newWidth, newHeight)
     }
-}
-
-function generateNewDomObject(unit, domObjID) {
-    let div = document.createElement("div", {"id":domObjID, className:"unit"});
-    return div;
-}
+    generateNewDomObject(domObjID) {
+        console.log("Creating new Unit dom-object")
+        let div = document.createElement("div", { "id": domObjID, className: "unit" });
+        return div;
+    }
+} 

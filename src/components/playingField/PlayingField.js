@@ -12,11 +12,6 @@ export default class PlayingField extends React.Component {
         super()
         this.apiService = new APIService();
         this.unitTypes = this.apiService.getUnits();
-        //this.activeUnits.push({ unittype: this.unitTypes[0] });
-        //this.activeUnits.push({ unittype: this.unitTypes[0] });
-        //this.activeUnits.push({ unittype: this.unitTypes[0] });
-        //this.activeUnits.push({ unittype: this.unitTypes[0] });
-        //this.activeUnits.push({ unittype: this.unitTypes[0] });
     }
 
     componentDidMount() {
@@ -30,11 +25,8 @@ export default class PlayingField extends React.Component {
         console.log("PX per tile - width: " + this.widthPixelPerUnit + ", height: " + this.heightPixelPerUnit)
     }
 
-
     addUnitToPlayingField(unitObj) {
-        console.log("unit to add to playingfield: ")
-        console.log(unitObj)
-        //this.refs.field.appendChild(unitObj)
+        this.refs.field.appendChild(unitObj)
     }
 
     allowDrop(evt) {
@@ -53,6 +45,9 @@ export default class PlayingField extends React.Component {
         console.log("Das ist  y-Position des gedroppten Elements: " + evt.clientY);
         console.log("Das ist die x-Position des gedroppten Elements: " + evt.clientX);
         evt.target.appendChild(h1);
+    }
+    drawUnit(){
+        console.log("Would be drawing Unit now")
     }
     render() {
         return (
