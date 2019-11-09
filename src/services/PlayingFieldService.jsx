@@ -52,13 +52,16 @@ class PlayingFieldService {
     startRenderLoop() {
         //render all units on the field
         for (let unit of this.unitList) {
+            //Get Id from Unit and render it to its target position
+            this.fieldDomObj.drawUnit(unit.id, this.translateToXPos(unit.posX) + this.offX, this.translateToYPos(unit.posY) + this.offY, this.translateToXPos(this.size), this.translateToYPos(this.size));
             // let positionX = unit.posX * this.fieldDimensions.pxPerTileWidth + this.fieldDimensions.offX;
             // let positionY = unit.posY * this.fieldDimensions.pxPerTileHeight + this.fieldDimensions.offY;
-            unit.setPosition(this.translateToXPos(unit.posX) + this.offX, this.translateToYPos(unit.posY) + this.offY, this.translateToXPos(this.size), this.translateToYPos(this.size));
+            // unit.setPosition(this.translateToXPos(unit.posX) + this.offX, this.translateToYPos(unit.posY) + this.offY, this.translateToXPos(this.size), this.translateToYPos(this.size));
+            // unit.updateUnitPosition()
         }
     }
-    updateUnitPosition(unitID){
-
+    updateUnitPosition(unitID, positionX, positionY, newWidth, newHeight){
+        this.fieldDomObj.updateUnitPosition(unitID, positionX, positionY, newWidth, newHeight);
     }
     startGameLoop() {
 
