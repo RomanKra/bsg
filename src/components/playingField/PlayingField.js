@@ -24,8 +24,9 @@ export default class PlayingField extends React.Component {
         this.widthPixelPerUnit = this.clientWidth / this.width;
         this.playingFieldService = getPlayingFieldService({ "width": this.widht, "height": this.height, "pxPerTileWidth": this.widthPixelPerUnit, "pxPerTileHeight": this.heightPixelPerUnit }, this);
         this.playingFieldService.startRenderLoop();
-        this.offX = 200;
-        this.offY = 200;
+        this.offX = this.refs.field.getBoundingClientRect().left;
+        this.offY = this.refs.field.getBoundingClientRect().top;
+        this.playingFieldService.setFieldDimensions({ "offX": this.offX, "offY": this.offY, "pxPerTileWidth": this.widthPixelPerUnit, "pxPerTileHeight": this.heightPixelPerUnit })
         console.log("PX per tile - width: " + this.widthPixelPerUnit + ", height: " + this.heightPixelPerUnit)
     }
 
@@ -48,30 +49,31 @@ export default class PlayingField extends React.Component {
         var data = evt.dataTransfer.getData("text");
         let unitList = getUnitTypeList();
         let unit = new Unit(unitList[0]);
-        unit.posX = (evt.clientX / this.widthPixelPerUnit);
-        unit.posY = (evt.clientY / this.heightPixelPerUnit);
+        unit.posX = ((evt.clientX - this.offX) / this.widthPixelPerUnit);
+        unit.posY = ((evt.clientY - this.offY) / this.heightPixelPerUnit);
         this.addUnitToPlayingField(unit.generateNewDomObject())
         this.playingFieldService.addUnit(unit);
         console.log("Das ist  y-Position des gedroppten Elements: " + evt.clientY);
         console.log("Das ist die x-Position des gedroppten Elements: " + evt.clientX);
     }
-    drawUnitU(unit){
-        let newPosX = this.offX.num + this.widthPixelPerUnit*unit.posX;
-        let newPosY = this.offY + this.heightPixelPerUnit * unit.posY;
-        let newWidth = this.widthPixelPerUnit * unit.size;
-        let newHeight = this.heightPixelPerUnit * unit.size;
-        this.drawUnit(unit.id, newPosX, newPosY, newWidth, newHeight);
+    drawUnitU(unit) {
+        let newPosX = /* Number(this.offX) +  */Number(this.widthPixelPerUnit) * Number(unit.posX);
+        let newPosY = /* Number(this.offY) + */ Number(this.heightPixelPerUnit) * Number(unit.posY);
+        let newWidth = Number(this.widthPixelPerUnit) * Number(unit.size);
+        let newHeight = Number(this.heightPixelPerUnit) * Number(unit.size);
+        this.drawUnit(unit.id, Number(newPosX), Number(newPosY), Number(newWidth), Number(newHeight));
     }
-    drawUnit(unitID, newPosX, newPosY, newWidth, newHeight){
+    drawUnit(unitID, newPosX, newPosY, newWidth, newHeight) {
         console.log("Would be drawing Unit now")
         let unitDom = document.getElementById(unitID);
-        if(unitDom == null){
+        if (unitDom == null) {
             console.error("Could not find unit with ID: " + unitID)
             return
         }
         console.log("drawing ...")
-        unitDom.style.transform = "translate(" +newPosX+ "px, " +newPosY+ "px)";
+        unitDom.style.transform = "translate(" + newPosX + "px, " + newPosY + "px)";
         unitDom.style.width = newWidth + "px";
+        console.log("set to: " + newWidth + "px, " + newHeight + "px at " + newPosX + "px, " + newPosY + "px")
         unitDom.style.height = newHeight + "px";
         console.log(unitDom.style)
     }
