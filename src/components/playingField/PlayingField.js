@@ -69,7 +69,11 @@ export default class PlayingField extends React.Component {
             console.error("Could not find unit with ID: " + unitID)
             return
         }
-        unitDom.style="{transform:translate(" +newPosX+ "px, " +newPosY+ "px), width: " + newWidth + ", height:" + newHeight + "}"
+        console.log("drawing ...")
+        unitDom.style.transform = "translate(" +newPosX+ "px, " +newPosY+ "px)";
+        unitDom.style.width = newWidth + "px";
+        unitDom.style.height = newHeight + "px";
+        console.log(unitDom.style)
     }
 
     render() {
