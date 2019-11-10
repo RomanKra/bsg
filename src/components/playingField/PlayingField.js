@@ -1,6 +1,6 @@
 import React from 'react';
 import Unit from './../../models/UnitModel';
-import getUnitTypeList from './../../models/unitTemplate';
+import {getUnitTypeByName} from './../../models/unitTemplate';
 import './PlayingField.css';
 import APIService from './../../services/APIService';
 import { getPlayingFieldService } from './../../services/PlayingFieldService';
@@ -46,34 +46,32 @@ export default class PlayingField extends React.Component {
 
     drop(evt) {
         evt.preventDefault();
-        var data = evt.dataTransfer.getData("text");
-        let unitList = getUnitTypeList();
-        let unit = new Unit(unitList[0]);
+        let unitTypeName = evt.dataTransfer.getData("unitName")
+        let unitType = getUnitTypeByName(unitTypeName);
+        console.log("got unittypename " + unitTypeName)
+        console.log(unitType)
+        let unit = new Unit(unitType);
         unit.posX = ((evt.clientX - this.offX) / this.widthPixelPerUnit);
         unit.posY = ((evt.clientY - this.offY) / this.heightPixelPerUnit);
         this.addUnitToPlayingField(unit.generateNewDomObject())
         this.playingFieldService.addUnit(unit);
-        console.log("Das ist  y-Position des gedroppten Elements: " + evt.clientY);
-        console.log("Das ist die x-Position des gedroppten Elements: " + evt.clientX);
     }
     drawUnitU(unit) {
         let newPosX = /* Number(this.offX) +  */Number(this.widthPixelPerUnit) * Number(unit.posX);
         let newPosY = /* Number(this.offY) + */ Number(this.heightPixelPerUnit) * Number(unit.posY);
         let newWidth = Number(this.widthPixelPerUnit) * Number(unit.size);
         let newHeight = Number(this.heightPixelPerUnit) * Number(unit.size);
-        this.drawUnit(unit.id, Number(newPosX), Number(newPosY), Number(newWidth), Number(newHeight));
+        this.drawUnit(unit.id, Number(newPosX), Number(newPosY), Number(newWidth), Number(newHeight), unit.color);
     }
-    drawUnit(unitID, newPosX, newPosY, newWidth, newHeight) {
-        console.log("Would be drawing Unit now")
+    drawUnit(unitID, newPosX, newPosY, newWidth, newHeight, newColor) {
         let unitDom = document.getElementById(unitID);
         if (unitDom == null) {
             console.error("Could not find unit with ID: " + unitID)
             return
         }
-        console.log("drawing ...")
         unitDom.style.transform = "translate(" + newPosX + "px, " + newPosY + "px)";
         unitDom.style.width = newWidth + "px";
-        console.log("set to: " + newWidth + "px, " + newHeight + "px at " + newPosX + "px, " + newPosY + "px")
+        unitDom.style.background = newColor;
         unitDom.style.height = newHeight + "px";
     }
 

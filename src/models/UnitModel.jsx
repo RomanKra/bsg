@@ -10,6 +10,8 @@ export default class Unit {
         this.damage = unitTemplate.damage;
         this.range = unitTemplate.range;
         this.melee = unitTemplate.melee;
+        this.shape = unitTemplate.shape;
+        this.color = unitTemplate.color;
         this.posX = 0;
         this.posY = 0;
         this.domObj = null;
@@ -34,7 +36,8 @@ export default class Unit {
         console.log("Creating new Unit dom-object")
         let div=document.createElement("div");
         div.setAttribute("id",this.id);
-        div.className="unit";
+        div.className="unit " + this.shape;
+        div.style.background = this.color;
         this.domObj = div;
         return this.domObj;
     }

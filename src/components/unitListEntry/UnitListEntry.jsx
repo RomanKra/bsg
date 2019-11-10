@@ -13,12 +13,17 @@ export default class UnitListEntry extends React.Component {
         }
     }
     */
+   constructor(){
+       super();
+       this.drag = this.drag.bind(this);
+   }
     allowDrop(evt) {
         evt.preventDefault();
     }
 
     drag(evt) {
         evt.dataTransfer.setData("text", evt.target.id);
+        evt.dataTransfer.setData("unitName", this.props.unit.name)
     }
 
 
