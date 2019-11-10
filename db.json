@@ -1,4 +1,5 @@
-[
+{
+"stuff":[
 {
     "name" : "sword",
     "size" : 1.0,
@@ -18,3 +19,4 @@
     "melee" : true
 }
 ]
+}
