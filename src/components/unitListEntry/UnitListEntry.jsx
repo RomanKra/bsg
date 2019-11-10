@@ -21,11 +21,7 @@ export default class UnitListEntry extends React.Component {
         evt.dataTransfer.setData("text", evt.target.id);
     }
 
-    drop(evt) {
-        evt.preventDefault();
-        var data = evt.dataTransfer.getData("text");
-        evt.target.appendChild(document.getElementById(data));
-    }
+
     render() {
 
         return (
