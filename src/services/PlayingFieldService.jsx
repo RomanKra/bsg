@@ -49,6 +49,9 @@ class PlayingFieldService {
             this.addUnitToPlayingField(u3.generateNewDomObject())
         }
     }
+    setFieldDimensions(fieldDims){
+        this.fieldDimensions = fieldDims;
+    }
     addUnit(unit){
         this.unitList.push(unit)
     }
@@ -63,13 +66,9 @@ class PlayingFieldService {
             //render all units on the field
             for (let unit of uList) {
                 //Get Id from Unit and render it to its target position
-                fdObj.drawUnit(unit.id, me.translateToXPos(unit.posX) + me.offX, me.translateToYPos(unit.posY) + me.offY, me.translateToXPos(me.size), me.translateToYPos(me.size));
-                // let positionX = unit.posX * this.fieldDimensions.pxPerTileWidth + this.fieldDimensions.offX;
-                // let positionY = unit.posY * this.fieldDimensions.pxPerTileHeight + this.fieldDimensions.offY;
-                // unit.setPosition(this.translateToXPos(unit.posX) + this.offX, this.translateToYPos(unit.posY) + this.offY, this.translateToXPos(this.size), this.translateToYPos(this.size));
-                // unit.updateUnitPosition()
+                fdObj.drawUnit(unit.id, me.translateToXPos(unit.posX)/*  + me.fieldDimensions.offX */, me.translateToYPos(unit.posY) /* + me.fieldDimensions.offY */, me.translateToXPos(unit.size), me.translateToYPos(unit.size));
             }
-        },100)
+        },2000)
     }
     updateUnitPosition(unitID, positionX, positionY, newWidth, newHeight){
         this.fieldDomObj.updateUnitPosition(unitID, positionX, positionY, newWidth, newHeight);
@@ -78,9 +77,9 @@ class PlayingFieldService {
 
     }
     translateToXPos(pos) {
-        return (pos * this.fieldDimensions.pxPerTileWidth);
+        return (Number(pos) * Number(this.fieldDimensions.pxPerTileWidth));
     }
     translateToYPos(pos) {
-        return (pos * this.fieldDimensions.pxPerTileHeight);
+        return (Number(pos) * Number(this.fieldDimensions.pxPerTileHeight));
     }
 }
