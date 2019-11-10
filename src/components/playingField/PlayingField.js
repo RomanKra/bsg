@@ -1,4 +1,6 @@
 import React from 'react';
+import Unit from './../../models/UnitModel';
+import getUnitTypeList from './../../models/unitTemplate';
 import './PlayingField.css';
 import APIService from './../../services/APIService';
 import { getPlayingFieldService } from './../../services/PlayingFieldService';
@@ -9,7 +11,8 @@ export default class PlayingField extends React.Component {
     height = 50;
 
     constructor() {
-        super()
+        super();
+        this.drop = this.drop.bind(this);
         this.apiService = new APIService();
         this.unitTypes = this.apiService.getUnits();
     }
@@ -42,11 +45,11 @@ export default class PlayingField extends React.Component {
     drop(evt) {
         evt.preventDefault();
         var data = evt.dataTransfer.getData("text");
-        let h1 = document.createElement("h1");
-        h1.innerText = "O";
+        let unitList = getUnitTypeList();
+        let unit = new Unit(unitList[0]);
+        this.addUnitToPlayingField(unit.generateNewDomObject())
         console.log("Das ist  y-Position des gedroppten Elements: " + evt.clientY);
         console.log("Das ist die x-Position des gedroppten Elements: " + evt.clientX);
-        evt.target.appendChild(h1);
     }
     drawUnit(unitID, newPosX, newPosY, newWidth, newHeight){
         console.log("Would be drawing Unit now")
@@ -57,13 +60,11 @@ export default class PlayingField extends React.Component {
         }
         unitDom.style="{transform:translate(" +newPosX+ "px, " +newPosY+ "px), width: " + newWidth + ", height:" + newHeight + "}"
     }
+
     render() {
         return (
-
-            <div className="maxed" >
-
+            <div className="maxed" ref="test">
                 <div id="battleground" ref="field">
-
                     <div id="enemySide">
                         Das ist die Seite des Gegners
                     </div>
