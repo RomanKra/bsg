@@ -14,10 +14,11 @@ export default class Unit extends React.Component {
         //    <div ref="unit" className="unit" draggable="true" style={{ "transform": transformstring, "width": this.calcedWidth, "height": this.calcedHeight }}>
         //    </div>
         //)
-        return(
+        return (
             <div className="unit" ref="unit" draggable="true"></div>
         )
     }
+
     updatePosition(newPosX, newPosY, newWidth, newHeight) {
         let transformstring = "translate(" + newPosX + "px," + newPosY + "px)"
         let newStyle = { "transform": transformstring, "width": newWidth, "height": newHeight }

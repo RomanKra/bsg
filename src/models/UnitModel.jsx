@@ -25,16 +25,18 @@ export default class Unit {
     setPosition(positionX, positionY, newWidth, newHeight) {
         console.log("Updating position for UnitModel to : " + positionX + "; " + positionY)
         if (this.domObj == null) {
-            let me = this;
-            this.domObjID = getNewUnitID();
-            this.domObj = this.generateNewDomObject(me);
-            getPlayingFieldService().addUnitToPlayingField(this.domObj);
+            //TODO: should never happen?
+            getPlayingFieldService().addUnitToPlayingField(this.generateNewDomObject());
         }
         getPlayingFieldService().updateUnitPosition(this.domObjID, positionX, positionY, newWidth, newHeight)
     }
-    generateNewDomObject(domObjID) {
+    generateNewDomObject() {
+        this.domObjID = getNewUnitID();
         console.log("Creating new Unit dom-object")
-        let div = document.createElement("div", { "id": domObjID, className: "unit" });
-        return div;
+        let div=document.createElement("div");
+        div.id=this.domObjID;
+        div.classname="unit";
+        this.domObj = div;
+        return this.domObj;
     }
 } 

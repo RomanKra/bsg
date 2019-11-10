@@ -44,6 +44,9 @@ class PlayingFieldService {
             this.unitList.push(u1)
             this.unitList.push(u2)
             this.unitList.push(u3)
+            this.addUnitToPlayingField(u1.generateNewDomObject())
+            this.addUnitToPlayingField(u2.generateNewDomObject())
+            this.addUnitToPlayingField(u3.generateNewDomObject())
         }
     }
     addUnitToPlayingField(unitDomObj) {

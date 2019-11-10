@@ -2,7 +2,7 @@ import React from 'react';
 import './PlayingField.css';
 import APIService from './../../services/APIService';
 import { getPlayingFieldService } from './../../services/PlayingFieldService';
-
+import Unit from './../unit/Unit'
 export default class PlayingField extends React.Component {
     activeUnits = []
     width = 100;
@@ -15,7 +15,7 @@ export default class PlayingField extends React.Component {
     }
 
     componentDidMount() {
-        let { clientHeight, clientWidth } = this.refs.test;
+        let { clientHeight, clientWidth } = this.refs.field;
         this.clientHeight = clientHeight;
         this.clientWidth = clientWidth;
         this.heightPixelPerUnit = this.clientHeight / this.height;
@@ -26,6 +26,8 @@ export default class PlayingField extends React.Component {
     }
 
     addUnitToPlayingField(unitObj) {
+        console.log("Appending new unit to field: ")
+        console.log(unitObj)
         this.refs.field.appendChild(unitObj)
     }
 
@@ -46,13 +48,19 @@ export default class PlayingField extends React.Component {
         console.log("Das ist die x-Position des gedroppten Elements: " + evt.clientX);
         evt.target.appendChild(h1);
     }
-    drawUnit(){
+    drawUnit(unitID, newPosX, newPosY, newWidth, newHeight){
         console.log("Would be drawing Unit now")
+        let unitDom = document.getElementById(unitID);
+        if(unitDom == null){
+            console.error("Could not find unit with ID: " + unitID)
+            return
+        }
+        unitDom.style="{transform:translate(" +newPosX+ "px, " +newPosY+ "px), width: " + newWidth + ", height:" + newHeight + "}"
     }
     render() {
         return (
 
-            <div className="maxed" ref="test">
+            <div className="maxed" >
 
                 <div id="battleground" ref="field">
 
