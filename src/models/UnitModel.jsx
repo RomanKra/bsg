@@ -28,14 +28,13 @@ export default class Unit {
             //TODO: should never happen?
             getPlayingFieldService().addUnitToPlayingField(this.generateNewDomObject());
         }
-        getPlayingFieldService().updateUnitPosition(this.domObjID, positionX, positionY, newWidth, newHeight)
+        getPlayingFieldService().updateUnitPosition(this.id, positionX, positionY, newWidth, newHeight)
     }
     generateNewDomObject() {
-        this.domObjID = getNewUnitID();
         console.log("Creating new Unit dom-object")
         let div=document.createElement("div");
-        div.id=this.domObjID;
-        div.classname="unit";
+        div.setAttribute("id",this.id);
+        div.className="unit";
         this.domObj = div;
         return this.domObj;
     }
