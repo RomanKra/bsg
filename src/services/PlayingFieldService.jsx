@@ -43,7 +43,7 @@ class PlayingFieldService {
                 //Get Id from Unit and render it to its target position
                 fdObj.drawUnit(unit.id, me.translateToXPos(unit.posX)/*  + me.fieldDimensions.offX */, me.translateToYPos(unit.posY) /* + me.fieldDimensions.offY */, me.translateToXPos(unit.size), me.translateToYPos(unit.size));
             }
-        },2000)
+        },100)
     }
     updateUnitPosition(unitID, positionX, positionY, newWidth, newHeight){
         this.fieldDomObj.updateUnitPosition(unitID, positionX, positionY, newWidth, newHeight);
