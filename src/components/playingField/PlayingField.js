@@ -4,7 +4,6 @@ import getUnitTypeList from './../../models/unitTemplate';
 import './PlayingField.css';
 import APIService from './../../services/APIService';
 import { getPlayingFieldService } from './../../services/PlayingFieldService';
-import Unit from './../unit/Unit'
 export default class PlayingField extends React.Component {
     activeUnits = []
     width = 100;
