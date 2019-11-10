@@ -24,6 +24,8 @@ export default class PlayingField extends React.Component {
         this.widthPixelPerUnit = this.clientWidth / this.width;
         this.playingFieldService = getPlayingFieldService({ "width": this.widht, "height": this.height, "pxPerTileWidth": this.widthPixelPerUnit, "pxPerTileHeight": this.heightPixelPerUnit }, this);
         this.playingFieldService.startRenderLoop();
+        this.offX = 200;
+        this.offY = 200;
         console.log("PX per tile - width: " + this.widthPixelPerUnit + ", height: " + this.heightPixelPerUnit)
     }
 
@@ -46,9 +48,19 @@ export default class PlayingField extends React.Component {
         var data = evt.dataTransfer.getData("text");
         let unitList = getUnitTypeList();
         let unit = new Unit(unitList[0]);
+        unit.posX = (evt.clientX / this.widthPixelPerUnit);
+        unit.posY = (evt.clientY / this.heightPixelPerUnit);
         this.addUnitToPlayingField(unit.generateNewDomObject())
+        this.playingFieldService.addUnit(unit);
         console.log("Das ist  y-Position des gedroppten Elements: " + evt.clientY);
         console.log("Das ist die x-Position des gedroppten Elements: " + evt.clientX);
+    }
+    drawUnitU(unit){
+        let newPosX = this.offX + this.widthPixelPerUnit*unit.posX;
+        let newPosY = this.offY + this.heightPixelPerUnit * unit.posY;
+        let newWidth = this.widthPixelPerUnit * unit.size;
+        let newHeight = this.heightPixelPerUnit * unit.size;
+        this.drawUnit(unit.id, newPosX, newPosY, newWidth, newHeight);
     }
     drawUnit(unitID, newPosX, newPosY, newWidth, newHeight){
         console.log("Would be drawing Unit now")

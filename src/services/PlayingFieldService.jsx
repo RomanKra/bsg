@@ -49,19 +49,27 @@ class PlayingFieldService {
             this.addUnitToPlayingField(u3.generateNewDomObject())
         }
     }
+    addUnit(unit){
+        this.unitList.push(unit)
+    }
     addUnitToPlayingField(unitDomObj) {
         this.fieldDomObj.addUnitToPlayingField(unitDomObj)
     }
     startRenderLoop() {
-        //render all units on the field
-        for (let unit of this.unitList) {
-            //Get Id from Unit and render it to its target position
-            this.fieldDomObj.drawUnit(unit.id, this.translateToXPos(unit.posX) + this.offX, this.translateToYPos(unit.posY) + this.offY, this.translateToXPos(this.size), this.translateToYPos(this.size));
-            // let positionX = unit.posX * this.fieldDimensions.pxPerTileWidth + this.fieldDimensions.offX;
-            // let positionY = unit.posY * this.fieldDimensions.pxPerTileHeight + this.fieldDimensions.offY;
-            // unit.setPosition(this.translateToXPos(unit.posX) + this.offX, this.translateToYPos(unit.posY) + this.offY, this.translateToXPos(this.size), this.translateToYPos(this.size));
-            // unit.updateUnitPosition()
-        }
+        let fdObj = this.fieldDomObj;
+        let uList = this.unitList;
+        let me = this;
+        setInterval(function(){
+            //render all units on the field
+            for (let unit of uList) {
+                //Get Id from Unit and render it to its target position
+                fdObj.drawUnit(unit.id, me.translateToXPos(unit.posX) + me.offX, me.translateToYPos(unit.posY) + me.offY, me.translateToXPos(me.size), me.translateToYPos(me.size));
+                // let positionX = unit.posX * this.fieldDimensions.pxPerTileWidth + this.fieldDimensions.offX;
+                // let positionY = unit.posY * this.fieldDimensions.pxPerTileHeight + this.fieldDimensions.offY;
+                // unit.setPosition(this.translateToXPos(unit.posX) + this.offX, this.translateToYPos(unit.posY) + this.offY, this.translateToXPos(this.size), this.translateToYPos(this.size));
+                // unit.updateUnitPosition()
+            }
+        },100)
     }
     updateUnitPosition(unitID, positionX, positionY, newWidth, newHeight){
         this.fieldDomObj.updateUnitPosition(unitID, positionX, positionY, newWidth, newHeight);
