@@ -1,24 +1,36 @@
 import React from 'react';
 import './UnitList.css';
-import APIService from '../../services/APIService';
+import getAPIService from '../../services/APIService';
 import UnitListEntry from '../unitListEntry/UnitListEntry';
 
 export default class UnitList extends React.Component {
     units = []
     constructor() {
         super();
-        this.apiService = new APIService();
-        this.units = this.apiService.getUnits();
+        this.state = { unitTypeList: [] };
+        this.apiCallBack = function (eventName, data) {
+            console.log("The api-callback has been called!")
+            this.setState({ "unitTypeList": data })
+        }
+    }
+    componentDidMount() {
+        this.apiService = getAPIService();
+        this.apiService.getUnits(this);
     }
     render() {
-        let unitList = this.units.map(unit =><li key={unit.name}><UnitListEntry unit={unit}></UnitListEntry></li>);
-        console.log("Unitlist:")
-        console.log(unitList)
-        return (
-            <div className="maxed">
-                <ul>{unitList}</ul>
-            </div>
-        )
+        if (this.state.unitTypeList != null) {
+            console.log(this.state.unitTypeList)
+            let unitList = this.state.unitTypeList.map(unit => <li key={unit.name}><UnitListEntry unit={unit}></UnitListEntry></li>);
+
+            return (
+                <div className="maxed">
+                    <ul>{unitList}</ul>
+                </div>
+            )
+        }
+        else {
+            return (<div className="maxed"></div>)
+        }
     }
 
 }

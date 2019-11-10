@@ -1,5 +1,5 @@
 import { getNewUnitID, getPlayingFieldService } from "../services/PlayingFieldService"
-import React from "react"
+
 export default class Unit {
     constructor(unitTemplate) {
         this.id = getNewUnitID();

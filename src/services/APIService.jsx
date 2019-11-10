@@ -1,46 +1,45 @@
-export default class APIService {
+
+import axios from 'axios'
+let apiService = null;
+export default function getAPIService() {
+    if (apiService == null) {
+        apiService = new APIService();
+    }
+    return apiService;
+}
+class APIService {
     constructor() {
-        this.unitTypeList = this.getUnitsFromAPI();
+        //this.getUnitsFromAPI();
     }
-    getUnitsFromAPI(){
-        return [
-            {
-                "name" : "sword",
-                "size" : 1.0,
-                "speed" : 0.1,
-                "attackSpeed" : 1.0,
-                "damage" : 1.0,
-                "range" : 2.0,
-                "melee" : true,
-                "color" : "gray",
-                "shape" : "circle"
-            },
-            {
-                "name" : "axe",
-                "size" : 2.0,
-                "speed" : 0.05,
-                "attackSpeed" : 0.5,
-                "damage" : 2.5,
-                "range" : 2.0,
-                "melee" : true,
-                "color" : "orange",
-                "shape" : "square"
-            },
-                {
-                    
-                "name" : "archer",
-                "size" : 1.0,
-                "speed" : 0.15,
-                "attackSpeed" : 0.5,
-                "damage" : 1.0,
-                "range" : 15.0,
-                "melee" : false,
-                "color" : "blue",
-                "shape" : "circle"
-                }
-        ]
+
+    async getUnitsFromAPI() {
+        const res = await axios.get(`https://my-json-server.typicode.com/RomanKra/bsg/db`)
+        this.unitTypeList = res.data.units;
+        return;
     }
-    getUnits(){
-        return this.unitTypeList;
+
+    async getUnits(subscriber) {
+        if (this.unitTypeList == null) {
+            let me = this;
+            this.getUnitsFromAPI().then(res => { subscriber.apiCallBack("unitTypeList", me.unitTypeList) });
+
+        } else {
+            subscriber.apiCallback("unitTypeList", this.unitTypeList);//setState({"unitTypeList": this.uniTypeList})
+        }
+    }
+
+    getUnitTypeByName(unitName) {
+        if (this.unitTypeList == null) {
+            this.getUnitsFromAPI();
+            alert("Unit types have not yet been loaded!")
+            return null;
+        }
+        for (let unitType of this.unitTypeList) {
+            if (unitType.name === unitName) {
+                return unitType;
+            }
+        }
+        alert("No unit of type " + unitName + " could be found.")
+        return null;
     }
 }

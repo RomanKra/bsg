@@ -1,9 +1,8 @@
 import React from 'react';
 import Unit from './../../models/UnitModel';
-import {getUnitTypeByName} from './../../models/unitTemplate';
 import './PlayingField.css';
-import APIService from './../../services/APIService';
 import { getPlayingFieldService } from './../../services/PlayingFieldService';
+import getAPIService  from './../../services/APIService'
 export default class PlayingField extends React.Component {
     activeUnits = []
     width = 100;
@@ -12,8 +11,6 @@ export default class PlayingField extends React.Component {
     constructor() {
         super();
         this.drop = this.drop.bind(this);
-        this.apiService = new APIService();
-        this.unitTypes = this.apiService.getUnits();
     }
 
     componentDidMount() {
@@ -31,8 +28,6 @@ export default class PlayingField extends React.Component {
     }
 
     addUnitToPlayingField(unitObj) {
-        console.log("Appending new unit to field: ")
-        console.log(unitObj)
         this.refs.field.appendChild(unitObj)
     }
 
@@ -46,13 +41,14 @@ export default class PlayingField extends React.Component {
 
     drop(evt) {
         evt.preventDefault();
+        let apiService = getAPIService();
         let unitTypeName = evt.dataTransfer.getData("unitName")
-        let unitType = getUnitTypeByName(unitTypeName);
-        console.log("got unittypename " + unitTypeName)
-        console.log(unitType)
+        let unitType = apiService.getUnitTypeByName(unitTypeName);
         let unit = new Unit(unitType);
         unit.posX = ((evt.clientX - this.offX) / this.widthPixelPerUnit);
         unit.posY = ((evt.clientY - this.offY) / this.heightPixelPerUnit);
+        console.log("Adding unit with name " + unitTypeName)
+        console.log(unitType)
         this.addUnitToPlayingField(unit.generateNewDomObject())
         this.playingFieldService.addUnit(unit);
     }
