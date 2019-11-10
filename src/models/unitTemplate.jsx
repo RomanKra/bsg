@@ -1,3 +1,5 @@
+import Axios from "axios";
+
 /**
  * this class contains the data a unitTemplate has to contains
  */
@@ -12,6 +14,17 @@ class UnitTemplate {
 }
 
 let list = null;
+var data = list;
+
+const axios = require('axios');
+axios.get(`https://my-json-server.typicode.com/RomanKra/bsg/db`)
+      .then(res => {
+        // list = res.data;
+        console.log(res.data.units[0]);
+        //console.log("HIER STEHEN WICHTIGE SACHEN DRIN: " + res.data[0]);
+        //list = res.data;
+        //console.log("------- " + list[0].name);
+      })
 
 export default function getUnitTypeList(){
     if (list == null){
