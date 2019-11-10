@@ -2,17 +2,6 @@ import React from 'react';
 import './UnitListEntry.css';
 
 export default class UnitListEntry extends React.Component {
-    /*
-    constructor(unitID) {
-        super()
-        let list = getUnitTypeList()
-        for (let unitType of list) {
-            if (unitType.data.id == unitID) {
-                this.props.unit = unitType.data;
-            }
-        }
-    }
-    */
    constructor(){
        super();
        this.drag = this.drag.bind(this);

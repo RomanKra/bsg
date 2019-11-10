@@ -1,6 +1,3 @@
-import getUnitTypeList from "../models/unitTemplate";
-import UnitModel from "../models/UnitModel"
-
 let playingFieldService = null;
 let unitIDCounter=-1;
 export function getPlayingFieldService(playingFieldDimensions, fieldObj) {
@@ -26,28 +23,6 @@ class PlayingFieldService {
         this.fieldDimensions = playingFieldDimensions;
         console.log("Submitted fieldDimensions: ")
         console.log(this.fieldDimensions)
-        //add default units for developing
-        let unitTypes = getUnitTypeList();
-        //for now, create 3 units of each type in random positions
-        for (let index in unitTypes) {
-            let type = unitTypes[index];
-            console.log("creating 3 units of type " + type.name)
-            let u1 = new UnitModel(type)
-            u1.posX = Math.round(Math.random() * 50)
-            u1.posY = Math.round(Math.random() * 50)
-            let u2 = new UnitModel(type)
-            u2.posX = Math.round(Math.random() * 50)
-            u2.posY = Math.round(Math.random() * 50)
-            let u3 = new UnitModel(type)
-            u3.posX = Math.round(Math.random() * 50)
-            u3.posY = Math.round(Math.random() * 50)
-            this.unitList.push(u1)
-            this.unitList.push(u2)
-            this.unitList.push(u3)
-            this.addUnitToPlayingField(u1.generateNewDomObject())
-            this.addUnitToPlayingField(u2.generateNewDomObject())
-            this.addUnitToPlayingField(u3.generateNewDomObject())
-        }
     }
     setFieldDimensions(fieldDims){
         this.fieldDimensions = fieldDims;

@@ -8,9 +8,6 @@ export default function getAPIService() {
     return apiService;
 }
 class APIService {
-    constructor() {
-        //this.getUnitsFromAPI();
-    }
 
     async getUnitsFromAPI() {
         const res = await axios.get(`https://my-json-server.typicode.com/RomanKra/bsg/db`)
